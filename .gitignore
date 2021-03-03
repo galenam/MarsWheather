@@ -1,0 +1,7 @@
+Server/Properties/*
+Server/obj/*
+Server/bin/*
+.vscode
+appsettings.json
+Server.Test/obj/*
+Server.Test/bin/*
