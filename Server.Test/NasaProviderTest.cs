@@ -5,6 +5,8 @@ using Microsoft.Extensions.Options;
 using System.IO;
 using System.Threading.Tasks;
 using System;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace server.test
 {
@@ -20,11 +22,14 @@ namespace server.test
         public async Task TestNasaProviderGetAsyncGoodFile()
         {
             var moq = new Mock<INasaStream>();
+            var moqLogger = new Mock<ILogger<NasaProvider>>();
+            var memory = new MemoryCache(new MemoryCacheOptions { });
+
             using (var stream = File.OpenRead(path))
             {
                 moq.Setup(x => x.GetDataAsync().Result).Returns(stream);
                 var options = Options.Create<AppSettings>(new AppSettings());
-                var provider = new NasaProvider(options, moq.Object);
+                var provider = new NasaProvider(options, moq.Object, moqLogger.Object, memory);
                 var result = await provider.GetAsync();
                 Assert.That(result, Is.Not.EqualTo(null));
                 Assert.That(result.Sol, Is.EqualTo(781));
