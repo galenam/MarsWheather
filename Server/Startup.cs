@@ -1,13 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using GraphQL.Types;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using GraphQL.Server;
+using System;
 
 namespace Mars
 {
@@ -21,13 +21,34 @@ namespace Mars
         }
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services, IWebHostEnvironment env)
         {
             services.AddOptions<AppSettings>().
                 Bind(configuration.GetSection(NasaSectionName));
             services.AddHttpClient<INasaStream, NasaStream>();
             services.AddSingleton<INasaProvider, NasaProvider>();
             services.AddSingleton<INasaStream, NasaStream>();
+
+            services.AddSingleton<ISchema, SolSchema>();
+            services.AddSingleton<SolDataQuery>();
+            services.AddSingleton<SolDataMutation>();
+
+            services.Configure<KestrelServerOptions>(options =>
+   {
+       options.AllowSynchronousIO = true;
+   });
+
+            services.AddGraphQL(options =>
+            {
+                options.EnableMetrics = true;
+            })
+            .AddSystemTextJson(deserializerSettings => { }, serializerSettings => { })
+            //.AddUserContextBuilder(httpContext => new GraphQLUserContext { User = httpContext.User })
+            .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = env.IsDevelopment());
+
+
+
+            services.AddMemoryCache();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,6 +68,9 @@ namespace Mars
                     await context.Response.WriteAsync("Hello World!");
                 });
             });
+
+            app.UseGraphQL<ISchema>();
+            app.UseGraphQLPlayground();
         }
     }
 }
