@@ -4,9 +4,21 @@ namespace Mars
 {
     public class SolDataQuery : ObjectGraphType<object>
     {
-        public SolDataQuery()
+        public SolDataQuery(INasaProvider nasaProvider)
         {
+            Field<MarsWheatherType>("wheather", resolve: context => nasaProvider.GetAsync());
+        }
+    }
 
+    public class MarsWheatherType : ObjectGraphType<MarsWheather>
+    {
+        public MarsWheatherType()
+        {
+            Field<IntGraphType>("sol");
+            Field<DateTimeGraphType>("firstUTC");
+            Field<DateTimeGraphType>("lastUTC");
+            Field<SeasonEnum>("season");
+            Field<DataDescriptionType>("AtmosphericPressure");
         }
     }
 

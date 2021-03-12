@@ -21,7 +21,7 @@ namespace Mars
         }
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-        public void ConfigureServices(IServiceCollection services, IWebHostEnvironment env)
+        public void ConfigureServices(IServiceCollection services)
         {
             services.AddOptions<AppSettings>().
                 Bind(configuration.GetSection(NasaSectionName));
@@ -32,6 +32,9 @@ namespace Mars
             services.AddSingleton<ISchema, SolSchema>();
             services.AddSingleton<SolDataQuery>();
             services.AddSingleton<SolDataMutation>();
+            services.AddSingleton<DataDescriptionType>();
+            services.AddSingleton<SeasonEnum>();
+            services.AddSingleton<MarsWheatherType>();
 
             services.Configure<KestrelServerOptions>(options =>
    {
@@ -44,10 +47,8 @@ namespace Mars
             })
             .AddSystemTextJson(deserializerSettings => { }, serializerSettings => { })
             //.AddUserContextBuilder(httpContext => new GraphQLUserContext { User = httpContext.User })
-            .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = env.IsDevelopment());
-
-
-
+            .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true);
+          
             services.AddMemoryCache();
         }
 
