@@ -11,7 +11,7 @@ namespace Mars
 {
     public class NasaProvider : INasaProvider
     {
-        static readonly HttpClient client = new HttpClient();
+        //static readonly HttpClient client = new HttpClient();
         static string key = "Sol";
         AppSettings settings;
         INasaStream nasaStream;

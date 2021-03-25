@@ -5,3 +5,4 @@ Server/bin/*
 appsettings.json
 Server.Test/obj/*
 Server.Test/bin/*
+Server/logs/*

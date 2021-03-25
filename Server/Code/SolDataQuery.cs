@@ -1,12 +1,23 @@
+using System;
 using GraphQL.Types;
+using Microsoft.Extensions.Logging;
 
 namespace Mars
 {
     public class SolDataQuery : ObjectGraphType<object>
     {
-        public SolDataQuery(INasaProvider nasaProvider)
+        ILogger<SolDataQuery> logger;
+        public SolDataQuery(INasaProvider nasaProvider, ILogger<SolDataQuery> _logger)
         {
-            Field<MarsWheatherType>("wheather", resolve: context => nasaProvider.GetAsync());
+            logger = _logger;
+            try
+            {
+                Field<MarsWheatherType>("wheather", resolve: context => nasaProvider.GetAsync());
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "SolDataQuery constructor");
+            }
         }
     }
 

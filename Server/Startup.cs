@@ -7,7 +7,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using GraphQL.Server;
-using System;
 
 namespace Mars
 {
@@ -23,18 +22,18 @@ namespace Mars
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddOptions<AppSettings>().
                 Bind(configuration.GetSection(NasaSectionName));
             services.AddHttpClient<INasaStream, NasaStream>();
             services.AddSingleton<INasaProvider, NasaProvider>();
-            services.AddSingleton<INasaStream, NasaStream>();
 
-            services.AddSingleton<ISchema, SolSchema>();
             services.AddSingleton<SolDataQuery>();
             services.AddSingleton<SolDataMutation>();
             services.AddSingleton<DataDescriptionType>();
             services.AddSingleton<SeasonEnum>();
             services.AddSingleton<MarsWheatherType>();
+            services.AddSingleton<ISchema, SolSchema>();
 
             services.Configure<KestrelServerOptions>(options =>
    {
@@ -50,6 +49,8 @@ namespace Mars
             .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true);
           
             services.AddMemoryCache();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,19 +60,9 @@ namespace Mars
             {
                 app.UseDeveloperExceptionPage();
             }
+                                    app.UseGraphQL<ISchema>();
+                                    app.UseGraphQLPlayground();
 
-            app.UseRouting();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
-            });
-
-            app.UseGraphQL<ISchema>();
-            app.UseGraphQLPlayground();
         }
     }
 }
