@@ -25,11 +25,11 @@ namespace Mars
     {
         public MarsWheatherType()
         {
-            Field<IntGraphType>("sol");
-            Field<DateTimeGraphType>("firstUTC");
-            Field<DateTimeGraphType>("lastUTC");
-            Field<SeasonEnum>("season");
-            Field<DataDescriptionType>("AtmosphericPressure");
+            Field(w => w.Sol);
+            Field(w => w.FirstUTC);
+            Field(w => w.LastUTC);
+            Field(w => w.MarsSeason);
+            //Field(w => w.AtmosphericPressure);
         }
     }
 

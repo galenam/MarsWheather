@@ -1,7 +1,7 @@
 namespace Mars {
     public class AppSettings {
-        public string APIKey { get; private set; }
-        public string MarsRoverPhotosUrl {get;private set;}
+        public string APIKey { get; set; }
+        public string MarsRoverPhotosUrl { get; set; }
         public string InSightUrl { get; set; }
     }
 
