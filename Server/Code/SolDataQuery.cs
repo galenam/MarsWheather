@@ -28,8 +28,8 @@ namespace Mars
             Field(w => w.Sol);
             Field(w => w.FirstUTC);
             Field(w => w.LastUTC);
-            Field(w => w.MarsSeason);
-            //Field(w => w.AtmosphericPressure);
+            Field<SeasonEnum>("season", resolve: w => w.Source.MarsSeason);
+            Field<DataDescriptionType>("amosphericPressure", resolve: w => w.Source.AtmosphericPressure);
         }
     }
 
