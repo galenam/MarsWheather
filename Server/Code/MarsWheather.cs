@@ -9,7 +9,9 @@ namespace Mars{
     {
         public List<MarsWheather> MarsWheather { get; set; }
     }
-    public class MarsWheather {
+    public class MarsWheather
+    {
+
         public int Sol { get; set; }
         [JsonPropertyName("First_UTC")]
         public DateTime FirstUTC { get; set; }
@@ -20,6 +22,19 @@ namespace Mars{
         public Season MarsSeason { get; set; }
         [JsonPropertyName("PRE")]
         public DataDescription AtmosphericPressure { get; set; }
+
+        [JsonIgnore]
+        public HashSet<string> CuriosityPhotos { get; set; }
+        [JsonIgnore]
+        public HashSet<string> OpportunityPhotos { get; set; }
+        [JsonIgnore]
+        public HashSet<string> SpiritPhotos { get; set; }
+
+        [JsonIgnore]
+        public DateTime EarthDate { get; set; }
+        [JsonIgnore]
+        public Dictionary<RoverName, RoverInfo> Rovers { get; set; }
+
     }
 
     public enum Season {
@@ -38,5 +53,17 @@ namespace Mars{
         public double Minimum { get; set; }
         [JsonPropertyName("mx")]
         public double Maximum { get; set; }
-    } 
+    }
+    public enum RoverName
+    {
+        Curiosity,
+        Opportunity,
+        Spirit
+    }
+
+    public class RoverInfo {
+        public DateTime LandingDate { get; set; }
+        public DateTime LaunchDate { get; set; }
+        public string Status { get; set; }
+    }
 }

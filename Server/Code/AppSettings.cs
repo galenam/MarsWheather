@@ -3,11 +3,6 @@ namespace Mars {
         public string APIKey { get; set; }
         public string MarsRoverPhotosUrl { get; set; }
         public string InSightUrl { get; set; }
-    }
-
-    public enum Rover {
-        Curiosity,
-        Opportunity,
-        Spirit
+        public int PhotoPageNumber { get; set; }
     }
 }

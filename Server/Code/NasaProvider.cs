@@ -11,7 +11,6 @@ namespace Mars
 {
     public class NasaProvider : INasaProvider
     {
-        //static readonly HttpClient client = new HttpClient();
         static string key = "Sol";
         AppSettings settings;
         INasaStream nasaStream;
@@ -31,10 +30,16 @@ namespace Mars
             if (!memory.TryGetValue(key, out wheather))
             {
                 try
-                {
+                {                    
                     var stream = await nasaStream.GetDataAsync();
                     var root = await JsonSerializer.DeserializeAsync<MarsWheatherRootObject>(stream, new JsonSerializerOptions { IgnoreNullValues = true });
                     wheather = root?.MarsWheather?[0] ?? null;
+
+                    var photoStream = await nasaStream.GetPhotoAsync(RoverName.Curiosity, wheather.Sol);
+                    var photo = await JsonSerializer.DeserializeAsync<MarsPhotosDTO>(photoStream);
+                    // todo : transfer DTO object to the part of MarsWheather
+
+
                     memory.Set(key, wheather, DateTimeOffset.Now.AddDays(1));
                 }
                 catch (Exception ex)
@@ -44,5 +49,7 @@ namespace Mars
             }
             return wheather;
         }
+
+
     }
 }

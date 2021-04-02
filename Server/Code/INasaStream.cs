@@ -6,5 +6,6 @@ namespace Mars
     public interface INasaStream
     {
         Task<Stream> GetDataAsync();
+        Task<Stream> GetPhotoAsync(RoverName name, int sol);
     }
 }

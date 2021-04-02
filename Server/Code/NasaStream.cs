@@ -20,18 +20,30 @@ namespace Mars
             logger = _logger;
         }
 
-        public async Task<Stream> GetDataAsync()
+        private async Task<Stream> GetStreamAsync(string url)
         {
             try
             {
-                var url = string.Format(settings.InSightUrl, settings.APIKey);
                 return await client.GetStreamAsync(url);
             }
             catch (Exception ex)
             {
-                logger.LogCritical(ex, "No information about wheather at all");
+                logger.LogCritical(ex, "No information");
                 return Stream.Null;
             }
+
+        }
+
+        public async Task<Stream> GetPhotoAsync(RoverName name, int sol)
+        {
+            var url = string.Format(settings.MarsRoverPhotosUrl, settings.APIKey, name.ToString(), sol, settings.PhotoPageNumber);
+            return await GetStreamAsync(url);
+        }
+
+        public async Task<Stream> GetDataAsync()
+        {
+            var url = string.Format(settings.InSightUrl, settings.APIKey);
+            return await GetStreamAsync(url);
         }
     }
 }
