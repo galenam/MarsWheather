@@ -24,16 +24,9 @@ namespace Mars{
         public DataDescription AtmosphericPressure { get; set; }
 
         [JsonIgnore]
-        public HashSet<string> CuriosityPhotos { get; set; }
+        public HashSet<string> Photos { get; set; }
         [JsonIgnore]
-        public HashSet<string> OpportunityPhotos { get; set; }
-        [JsonIgnore]
-        public HashSet<string> SpiritPhotos { get; set; }
-
-        [JsonIgnore]
-        public DateTime EarthDate { get; set; }
-        [JsonIgnore]
-        public Dictionary<RoverName, RoverInfo> Rovers { get; set; }
+        public List<RoverInfo> Rovers { get; set; }
 
     }
 
@@ -62,6 +55,8 @@ namespace Mars{
     }
 
     public class RoverInfo {
+
+        public string Name { get; set; }
         public DateTime LandingDate { get; set; }
         public DateTime LaunchDate { get; set; }
         public string Status { get; set; }

@@ -1,7 +1,8 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Mars {
     public interface INasaProvider {
-        Task<MarsWheather> GetAsync();
+        Task<IEnumerable<MarsWheather>> GetAsync();
     }
 }

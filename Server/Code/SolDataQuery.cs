@@ -30,6 +30,8 @@ namespace Mars
             Field(w => w.LastUTC);
             Field<SeasonEnum>("season", resolve: w => w.Source.MarsSeason);
             Field<DataDescriptionType>("amosphericPressure", resolve: w => w.Source.AtmosphericPressure);
+            Field<ListGraphType<StringGraphType>>("photos", resolve: w => w.Source.Photos);
+            Field<ListGraphType<RoverInfoType>>("rovers", resolve: w => w.Source.Rovers);
         }
     }
 
@@ -44,6 +46,17 @@ namespace Mars
             Field(d => d.Maximum).Description("Maximum data sample over the sol");
             Field(d => d.Minimum).Description("Minimum data sample over the sol");
             Field(d => d.TotalCount).Description("Total number of recorded samples over the Sol");
+        }
+    }
+
+    public class RoverInfoType : ObjectGraphType<RoverInfo>
+    {
+        public RoverInfoType()
+        {
+            Field(r => r.Name);
+            Field(r => r.LandingDate);
+            Field(r => r.LaunchDate);
+            Field(r => r.Status);
         }
     }
 }

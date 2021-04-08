@@ -32,6 +32,7 @@ namespace Mars
             services.AddSingleton<SolDataMutation>();
             services.AddSingleton<DataDescriptionType>();
             services.AddSingleton<SeasonEnum>();
+            services.AddSingleton<RoverInfoType>();
             services.AddSingleton<MarsWheatherType>();
             services.AddSingleton<ISchema, SolSchema>();
 

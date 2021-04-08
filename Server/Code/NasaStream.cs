@@ -34,9 +34,9 @@ namespace Mars
 
         }
 
-        public async Task<Stream> GetPhotoAsync(RoverName name, int sol)
+        public async Task<Stream> GetPhotoAsync(RoverName name, DateTime date)
         {
-            var url = string.Format(settings.MarsRoverPhotosUrl, settings.APIKey, name.ToString(), sol, settings.PhotoPageNumber);
+            var url = string.Format(settings.MarsRoverPhotosUrl, settings.APIKey, name.ToString(), date.ToString("yyyy-MM-dd"), settings.PhotoPageNumber);
             return await GetStreamAsync(url);
         }
 
