@@ -12,7 +12,7 @@ namespace Mars
             logger = _logger;
             try
             {
-                Field<MarsWheatherType>("wheather", resolve: context => nasaProvider.GetAsync());
+                Field<ListGraphType<MarsWheatherType>>("wheather", resolve: context => nasaProvider.GetAsync());
             }
             catch (Exception ex)
             {
