@@ -66,7 +66,7 @@ namespace server.test
                             Assert.That(photos.Count, Is.EqualTo(50));
                             var rovers = result.Rovers;
                             Assert.That(rovers, Is.Not.Null);
-                            Assert.That(rovers.Count, Is.EqualTo(3));
+                            Assert.That(rovers.Count, Is.EqualTo(2));
                         }
                     }
                 }
