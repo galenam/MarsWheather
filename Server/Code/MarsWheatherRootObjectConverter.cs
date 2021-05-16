@@ -10,7 +10,7 @@ namespace Mars
         public override MarsWheatherRootObject Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             var root = new MarsWheatherRootObject();
-            var list = new List<MarsWheather>();
+            var list = new List<MarsWheather>();        
             while (reader.Read())
             {
                 switch (reader.TokenType)

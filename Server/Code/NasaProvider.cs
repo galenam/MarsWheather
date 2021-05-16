@@ -33,8 +33,10 @@ namespace Mars
                 try
                 {                    
                     var stream = await nasaStream.GetDataAsync();
-                    var root = await JsonSerializer.DeserializeAsync<MarsWheatherRootObject>(stream, new JsonSerializerOptions { IgnoreNullValues = true });
-                    wheathers = root?.MarsWheather ?? null;
+                    wheathers =new List<MarsWheather>(await CustomDeserializer.GetAsync(stream));
+                                        /*                     var root = await JsonSerializer.DeserializeAsync<MarsWheatherRootObject>(stream, new JsonSerializerOptions { IgnoreNullValues = true });
+                                                            wheathers = root?.MarsWheather ?? null;
+                                         */
                     foreach (var wheather in wheathers)
                     {
                         wheather.Photos = new HashSet<string>();

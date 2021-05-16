@@ -1,7 +1,6 @@
 using GraphQL.Types;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +12,7 @@ namespace Mars
     public class Startup
     {
         const string NasaSectionName = "NasaData";
+        public static string CorsNamePolicy = "ClientPolicy";
         IConfiguration configuration;
         public Startup(IConfiguration _config)
         {
@@ -22,7 +22,6 @@ namespace Mars
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddOptions<AppSettings>().
                 Bind(configuration.GetSection(NasaSectionName));
             services.AddHttpClient<INasaStream, NasaStream>();
@@ -48,7 +47,17 @@ namespace Mars
             .AddSystemTextJson(deserializerSettings => { }, serializerSettings => { })
             //.AddUserContextBuilder(httpContext => new GraphQLUserContext { User = httpContext.User })
             .AddErrorInfoProvider(opt => opt.ExposeExceptionStackTrace = true);
-          
+
+            var path = configuration.GetValue<string>(CorsNamePolicy);
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: CorsNamePolicy,
+                    builder =>
+                    {
+                        builder.WithOrigins(path);
+                    });
+            });
+
             services.AddMemoryCache();
 
 
@@ -61,9 +70,9 @@ namespace Mars
             {
                 app.UseDeveloperExceptionPage();
             }
-                                    app.UseGraphQL<ISchema>();
-                                    app.UseGraphQLPlayground();
-
+            app.UseGraphQL<ISchema>();
+            app.UseGraphQLPlayground();
+            app.UseCors(CorsNamePolicy);
         }
     }
 }

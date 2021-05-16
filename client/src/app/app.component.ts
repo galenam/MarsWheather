@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { GraphqlService } from './graphql.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'client';
+
+  constructor(private graphql: GraphqlService) { }
+
+  ngOnInit() {
+    this.graphql.getSols();
+  }
 }
