@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
-import { MarsWheather } from './mars-wheather';
+import { MarsWeather } from './mars-weather';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class GraphqlService {
     this.apollo.watchQuery({
       query: gql`
       	{
-    wheather {
+    weather {
       sol
     }
   }`

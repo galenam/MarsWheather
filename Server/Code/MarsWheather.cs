@@ -4,12 +4,12 @@ using System.Text.Json.Serialization;
 
 namespace Mars{
 
-    [JsonConverter(typeof(MarsWheatherRootObjectConverter))]
-    public class MarsWheatherRootObject
+    [JsonConverter(typeof(MarsWeatherRootObjectConverter))]
+    public class MarsWeatherRootObject
     {
-        public List<MarsWheather> MarsWheather { get; set; }
+        public List<MarsWeather> MarsWeather { get; set; }
     }
-    public class MarsWheather
+    public class MarsWeather
     {
 
         public int Sol { get; set; }

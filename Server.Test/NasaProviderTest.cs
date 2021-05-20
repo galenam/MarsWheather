@@ -31,13 +31,10 @@ namespace server.test
                 using (var streamCuriosity = File.OpenRead(pathCuriosity))
                 {
                     using (var streamOpportunity = File.OpenRead(pathOpportunity))
-
                     {
                         using (var streamSpirit = File.OpenRead(pathSpirit))
 
                         {
-
-
                             moq.Setup(x => x.GetDataAsync().Result).Returns(stream);
                             moq.Setup(x => x.GetPhotoAsync(RoverName.Curiosity, It.IsAny<DateTime>()).Result).Returns(streamCuriosity);
                             moq.Setup(x => x.GetPhotoAsync(RoverName.Opportunity, It.IsAny<DateTime>()).Result).Returns(streamOpportunity);

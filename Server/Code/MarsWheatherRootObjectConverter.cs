@@ -5,12 +5,12 @@ using System.Text.Json.Serialization;
 
 namespace Mars
 {
-    internal class MarsWheatherRootObjectConverter : JsonConverter<MarsWheatherRootObject>
+    internal class MarsWeatherRootObjectConverter : JsonConverter<MarsWeatherRootObject>
     {
-        public override MarsWheatherRootObject Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override MarsWeatherRootObject Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            var root = new MarsWheatherRootObject();
-            var list = new List<MarsWheather>();        
+            var root = new MarsWeatherRootObject();
+            var list = new List<MarsWeather>();
             while (reader.Read())
             {
                 switch (reader.TokenType)
@@ -25,7 +25,7 @@ namespace Mars
                         }
                         else
                         {
-                            var value = JsonSerializer.Deserialize<MarsWheather>(ref reader, options);
+                            var value = JsonSerializer.Deserialize<MarsWeather>(ref reader, options);
                             value.Sol = key;
                             list.Add(value);
                         }
@@ -33,11 +33,11 @@ namespace Mars
                     default: break;
                 }
             }
-            root.MarsWheather = list;
+            root.MarsWeather = list;
             return root;
         }
 
-        public override void Write(Utf8JsonWriter writer, MarsWheatherRootObject value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, MarsWeatherRootObject value, JsonSerializerOptions options)
         {
             throw new NotImplementedException();
         }

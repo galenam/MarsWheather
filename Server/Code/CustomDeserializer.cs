@@ -11,9 +11,9 @@ namespace Mars
     public static class CustomDeserializer
     {
         static string fieldName = "sol_keys";
-        public static async Task<IEnumerable<MarsWheather>> GetAsync(Stream stream)
+        public static async Task<IEnumerable<MarsWeather>> GetAsync(Stream stream)
         {
-            var result = new List<MarsWheather>();
+            var result = new List<MarsWeather>();
             using (var document = JsonDocument.Parse(stream))
             {
                 var root = document.RootElement;
@@ -22,17 +22,10 @@ namespace Mars
                 {
                     if (root.TryGetProperty(key.GetString(), out var element))
                     {
-                        try
-                        {
-                            var wheather = await JsonSerializer.DeserializeAsync<MarsWheather>(new MemoryStream(Encoding.ASCII.GetBytes(element.GetRawText())));
-                            int.TryParse(key.GetString(), out var sol);
-                            wheather.Sol = sol;
-                            result.Add(wheather);
-                        }
-                        catch (Exception ex)
-                        {
-
-                        }
+                        var weather = await JsonSerializer.DeserializeAsync<MarsWeather>(new MemoryStream(Encoding.ASCII.GetBytes(element.GetRawText())));
+                        int.TryParse(key.GetString(), out var sol);
+                        weather.Sol = sol;
+                        result.Add(weather);
                     }
                 }
             }

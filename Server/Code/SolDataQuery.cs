@@ -12,7 +12,7 @@ namespace Mars
             logger = _logger;
             try
             {
-                Field<ListGraphType<MarsWheatherType>>("wheather", resolve: context => nasaProvider.GetAsync());
+                Field<ListGraphType<MarsWeatherType>>("weather", resolve: context => nasaProvider.GetAsync());
             }
             catch (Exception ex)
             {
@@ -21,15 +21,15 @@ namespace Mars
         }
     }
 
-    public class MarsWheatherType : ObjectGraphType<MarsWheather>
+    public class MarsWeatherType : ObjectGraphType<MarsWeather>
     {
-        public MarsWheatherType()
+        public MarsWeatherType()
         {
             Field(w => w.Sol);
             Field(w => w.FirstUTC);
             Field(w => w.LastUTC);
             Field<SeasonEnum>("season", resolve: w => w.Source.MarsSeason);
-            Field<DataDescriptionType>("amosphericPressure", resolve: w => w.Source.AtmosphericPressure);
+            Field<DataDescriptionType>("atmosphericPressure", resolve: w => w.Source.AtmosphericPressure);
             Field<ListGraphType<StringGraphType>>("photos", resolve: w => w.Source.Photos);
             Field<ListGraphType<RoverInfoType>>("rovers", resolve: w => w.Source.Rovers);
         }

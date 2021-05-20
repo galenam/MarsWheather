@@ -25,29 +25,26 @@ namespace Mars
             logger = _logger;
             memory = _memory;
         }
-        public async Task<IEnumerable<MarsWheather>> GetAsync()
+        public async Task<IEnumerable<MarsWeather>> GetAsync()
         {
-            List<MarsWheather> wheathers = null;
-            if (!memory.TryGetValue(key, out wheathers))
+            List<MarsWeather> weathers = null;
+            if (!memory.TryGetValue(key, out weathers))
             {
                 try
                 {                    
                     var stream = await nasaStream.GetDataAsync();
-                    wheathers =new List<MarsWheather>(await CustomDeserializer.GetAsync(stream));
-                                        /*                     var root = await JsonSerializer.DeserializeAsync<MarsWheatherRootObject>(stream, new JsonSerializerOptions { IgnoreNullValues = true });
-                                                            wheathers = root?.MarsWheather ?? null;
-                                         */
-                    foreach (var wheather in wheathers)
+                    weathers = new List<MarsWeather>(await CustomDeserializer.GetAsync(stream));
+                    foreach (var weather in weathers)
                     {
-                        wheather.Photos = new HashSet<string>();
-                        wheather.Rovers = new List<RoverInfo>();
+                        weather.Photos = new HashSet<string>();
+                        weather.Rovers = new List<RoverInfo>();
 
                         foreach (var rName in (RoverName[])Enum.GetValues(typeof(RoverName)))
                         {
-                            var photoStream = await nasaStream.GetPhotoAsync(rName, wheather.FirstUTC);
+                            var photoStream = await nasaStream.GetPhotoAsync(rName, weather.FirstUTC);
                             var photoDTO = await JsonSerializer.DeserializeAsync<MarsPhotosDTO>(photoStream);
                             var photos = photoDTO.photos.Select(ph => ph.img_src);
-                            wheather.Photos.UnionWith(photos);
+                            weather.Photos.UnionWith(photos);
                             var photoInfo = photoDTO?.photos?.FirstOrDefault();
                             if (photoInfo == null)
                             {
@@ -64,18 +61,18 @@ namespace Mars
                                 Status = photoInfo.rover.status,
                                 Name = rName.ToString()
                             };
-                            wheather.Rovers.Add(rInfo);
+                            weather.Rovers.Add(rInfo);
                         }
                     }
 
-                    memory.Set(key, wheathers, DateTimeOffset.Now.AddDays(1));
+                    memory.Set(key, weathers, DateTimeOffset.Now.AddDays(1));
                 }
                 catch (Exception ex)
                 {
                     logger.LogError(ex, "No data deserialized");
                 }
             }
-            return wheathers;
+            return weathers;
         }
 
     }
