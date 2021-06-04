@@ -39,7 +39,7 @@ namespace Mars
 
             services.AddOptions<AppSettings>().
                 Bind(configuration.GetSection(NasaSectionName));
-services.AddOptions<FakeDataPath>().Bind(configuration.GetSection(FakeData));
+            services.AddOptions<FakeDataPath>().Bind(configuration.GetSection(FakeData));
 
             var useFakeData = configuration.GetValue<bool>(UseFakeData);
             if (useFakeData)

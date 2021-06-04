@@ -6,11 +6,13 @@ import { AppComponent } from './app.component';
 import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
 import { SolNumberComponent } from './sol-number/sol-number.component';
+import { WeatherDataComponent } from './weather-data/weather-data.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SolNumberComponent
+    SolNumberComponent,
+    WeatherDataComponent
   ],
   imports: [
     BrowserModule,

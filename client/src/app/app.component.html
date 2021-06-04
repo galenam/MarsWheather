@@ -1,2 +1,14 @@
-<img src="../assets/mars.jpg" />
-<app-sol-number></app-sol-number>
+<div class="content">
+    <div>
+        <img src="../assets/mars.jpg" />
+    </div>
+    <div class="second">
+        <div *ngFor="let item of weather;">
+            <app-sol-number [weather]="item" (click)="onShow(item)"></app-sol-number>
+        </div>
+    </div>
+    </div>
+    
+    <div>
+        <app-weather-data [weather]="weatherToShow"></app-weather-data>
+    </div>

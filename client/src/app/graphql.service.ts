@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
+import { Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { MarsWeather } from './mars-weather';
 
 @Injectable({
@@ -9,18 +11,31 @@ export class GraphqlService {
 
   constructor(private apollo: Apollo) { }
 
-  getSols() {
-    this.apollo.watchQuery({
+  getSols(): Observable<any> {
+    return this.apollo.watchQuery({
       query: gql`
       	{
     weather {
-      sol
+      sol,
+      firstUTC,
+      lastUTC,
+      season,
+      atmosphericPressure{
+        average,
+        maximum,
+        minimum,
+        totalCount
+      },
+      photos,
+      rovers {
+        name,
+        launchDate,
+        landingDate,
+        status
+      }
     }
   }`
     })
-      .valueChanges.subscribe((result: any) => {
-        console.log(result);
-      })
+      .valueChanges
   }
-
 }
