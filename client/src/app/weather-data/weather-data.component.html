@@ -1,1 +1,22 @@
-<p *ngIf="weather">{{weather.sol}}</p>
+<div class="content">
+    <div *ngIf="weather">
+        <div>Time for first datum of any sensor <span>{{weather.firstUTC}}</span></div>
+        <div>Time for last datum of any sensor <span>{{weather.lastUTC}}</span></div>
+        <div>Season in Mars: <span>{{weather.season.toString().toLowerCase()}}</span></div>
+        <div *ngIf="weather.atmosphericPressure">
+            <div>Average of samples of atmospheric temperature <span>{{weather.atmosphericPressure.average}}</span>
+            </div>
+            <div>Total number of atmospheric temperature <span>{{weather.atmosphericPressure.totalCount}}</span></div>
+            <div>Minimum data of atmospheric temperature <span>{{weather.atmosphericPressure.minimum}}</span></div>
+            <div>Maximum data of atmospheric temperature <span>{{weather.atmosphericPressure.maximum}}</span></div>
+        </div>
+        <div *ngIf="weather.photos">
+            Photos <a href="/" (click)="showHide()">Click to show</a>
+        </div>
+    </div>
+    <div *ngIf="weather && weather.photos && showPhotos">
+        <div *ngFor="let photo of weather.photos">
+            <app-mars-photo [photo]="photo"></app-mars-photo>
+        </div>
+    </div>
+</div>

@@ -7,12 +7,14 @@ import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
 import { SolNumberComponent } from './sol-number/sol-number.component';
 import { WeatherDataComponent } from './weather-data/weather-data.component';
+import { MarsPhotoComponent } from './mars-photo/mars-photo.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SolNumberComponent,
-    WeatherDataComponent
+    WeatherDataComponent,
+    MarsPhotoComponent
   ],
   imports: [
     BrowserModule,

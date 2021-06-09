@@ -8,11 +8,17 @@ import { MarsWeather } from '../mars-weather';
 })
 export class WeatherDataComponent implements OnInit {
   @Input() weather: MarsWeather | null = null;
+  showPhotos: boolean = false;
   constructor() {
   }
 
   ngOnInit(): void {
-    console.log(this.weather);
+  }
+
+  showHide(): boolean {
+    this.showPhotos = !this.showPhotos;
+    console.log('here');
+    return false;
   }
 
 }

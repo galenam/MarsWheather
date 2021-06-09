@@ -32,6 +32,5 @@ export class AppComponent {
 
   onShow(item: MarsWeather) {
     this.weatherToShow = item;
-    console.log(item);
   }
 }
