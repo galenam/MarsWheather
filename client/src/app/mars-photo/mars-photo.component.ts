@@ -6,7 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./mars-photo.component.styl']
 })
 export class MarsPhotoComponent implements OnInit {
-  @Input() photo: string = "";
+  @Input() photos: Array<string> = new Array();
   constructor() { }
 
   ngOnInit(): void {

@@ -4,7 +4,7 @@ import { MarsWeather } from '../mars-weather';
 @Component({
   selector: 'app-weather-data',
   templateUrl: './weather-data.component.html',
-  styleUrls: ['./weather-data.component.styl']
+  styleUrls: ['./weather-data.component.styl', '../app.component.styl']
 })
 export class WeatherDataComponent implements OnInit {
   @Input() weather: MarsWeather | null = null;
@@ -17,7 +17,6 @@ export class WeatherDataComponent implements OnInit {
 
   showHide(): boolean {
     this.showPhotos = !this.showPhotos;
-    console.log('here');
     return false;
   }
 

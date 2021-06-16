@@ -1,4 +1,4 @@
-<div class="content">
+<div class="content weatherblock">
     <div *ngIf="weather">
         <div>Time for first datum of any sensor <span>{{weather.firstUTC}}</span></div>
         <div>Time for last datum of any sensor <span>{{weather.lastUTC}}</span></div>
@@ -14,9 +14,9 @@
             Photos <a href="/" (click)="showHide()">Click to show</a>
         </div>
     </div>
-    <div *ngIf="weather && weather.photos && showPhotos">
-        <div *ngFor="let photo of weather.photos">
-            <app-mars-photo [photo]="photo"></app-mars-photo>
+    <div *ngIf="weather && weather.photos && showPhotos" class="photos">
+        <div class="accordion" id="accordionPhoto">
+            <app-mars-photo [photos]="weather.photos"></app-mars-photo>
         </div>
     </div>
 </div>
